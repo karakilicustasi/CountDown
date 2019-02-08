@@ -6,6 +6,8 @@ using UnityEngine;
 using System;
 
 public class Game : MonoBehaviour {
+
+    static Text mainButton;//Ulaşmak istediğimiz sayı
     static Text button1;
     static Text button2;
     static Text button3;
@@ -13,8 +15,9 @@ public class Game : MonoBehaviour {
     static Text button5;
     static Text button6;
     public Text[] buttons= { button1, button2, button3, button4, button5, button6};
+    public Text[] mainButtonArray = { mainButton};
     bool permission=false;
-    static Text mainButton;//Ulaşmak istediğimiz sayı
+    
     string calculation = "";
     double sum = 0;
     
@@ -22,7 +25,13 @@ public class Game : MonoBehaviour {
 
     public void Randomize()
     {
-      
+        System.Random rnd = new System.Random();
+        mainButtonArray[0].text = ""+ rnd.Next(500, 1500);
+        
+    }
+    private void Start()
+    {
+        Randomize();
     }
     public void ButtonPressed()
     {
@@ -50,8 +59,6 @@ public class Game : MonoBehaviour {
                 mainString += " " + buttons[Int32.Parse(EventSystem.current.currentSelectedGameObject.tag)-1].text;
                 permission = true;
             }
-            
-
         }
         Calculate();
         Debug.Log(mainString);
@@ -61,7 +68,7 @@ public class Game : MonoBehaviour {
     {
         mainString=mainString.Trim();
        string [] array = mainString.Split(' ');
-        if (array.Length==3){
+        if (array.Length==3){// 4+5 
             mainString = "";
             switch (array[1])
             {
@@ -73,11 +80,9 @@ public class Game : MonoBehaviour {
                 case "*":
                     mainString = "" + (Int32.Parse(array[0]) * Int32.Parse(array[2]));
                     break;
-
                 case "/":
                     mainString = "" + (Int32.Parse(array[0]) /Int32.Parse(array[2]));
                     break;
-
             }
         }
     }
